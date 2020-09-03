@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
 
 
 
@@ -28,41 +26,61 @@ function App() {
      }
   }
 
+  const calcTime = (offset) => {
+  const d = new Date();
+  const strTime = `${d.getHours()}:${d.getMinutes()}`;
+  return strTime;
+}
 
-  return(
-    <div className="App">
-        <main>
-          <div className="search-box">
-            <input type="text"
-             className="search-bar"
-             placeholder="Search.."
-             value={query}
-             onKeyPress={search}
-             onChange={e => setQuery(e.target.value)} />
-          </div>
-          
+
+//Note: configured for local time. will need to fix this
+  const selectBackground = () => {
+    if (typeof weather.main == 'undefined') {
+      return ('App');
+    }
+    else {
+      if(new Date().getHours() > 19 && new Date().getHours() < 5) {return 'App night'}
+      if(new Date().getHours() > 5 && new Date().getHours() < 10) {return 'App sunrise'}
+      if(weather.main.temp < 0) {return 'App freezing'}
+      if(weather.main.temp > 32) {return 'App scorching'}
+    }
+    return 'App default';
+  }
+
+
+  return (
+    // <div className={(typeof weather.main != "undefined") ? ((weather.main.temp > 16) ? 'App warm' : 'App') : 'App'}>
+    <div className={selectBackground()}>
+
+      <main>
+        <div className="search-box">
+          <input 
+            type="text"
+            className="search-bar"
+            placeholder="Search..."
+            onChange={e => setQuery(e.target.value)}
+            value={query}
+            onKeyPress={search}
+          />
+        </div>
+        {(typeof weather.main != "undefined") ? (
+        <div>
           <div className="location-box">
-            <div className="location">
-              <p>Athens, Ohio</p>
-            </div>
-            
-            <div className="time">
-              <p>4:20pm </p>
-            </div>
+            <div className="location">{weather.name}, {weather.sys.country}</div>
+        <div className="time">{calcTime(weather.main.timezone)}</div>
           </div>
-
-            <div className="weather-box">
-              <div className="temp">
-                <h2> 0 degrees </h2>
-              </div>
-            
-            <div className="conditions">
-              <p> Sunny </p>
+          <div className="weather-box">
+            <div className="temp">
+              {Math.round(weather.main.temp)}°f
             </div>
+            <div className="weather">{weather.weather[0].description}</div> 
           </div>
-        </main>
+        </div>
+        ) : ('')}
+      </main>
     </div>
   );
+  
 
 }
 
