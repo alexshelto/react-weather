@@ -111,7 +111,12 @@ main {
   position: relative;
   margin: 10px auto;
   padding: 5px 5px;
-  font-size: 20px;
+  font-size: 3vh;
   font-weight: 400;
   color: #FFF;
+
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  width: 50%;
+
 }

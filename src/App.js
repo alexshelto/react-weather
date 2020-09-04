@@ -7,8 +7,6 @@ const api = {
   base: 'https://api.openweathermap.org/data/2.5/'
 }
 
-// const nightList = ['night', 'night1', ]
-
 
 
 function App() {
@@ -32,7 +30,7 @@ function App() {
 
     const d = new Date();
     let hr = parseInt(d.getUTCHours());
-    console.log("Before calc time: hour: " + hr);
+    console.log("Before calc time: hour: " + hr + " sec");
     console.log('offset: ' + offset);
 
     if(offset > 0){
@@ -49,8 +47,11 @@ function App() {
       if(hr < 0) { hr = hr + 24;}
     }
     console.log(hr);
-    // setHour(hr);
-    const strTime = `${hr}:${d.getMinutes()}`;
+    var strTime;
+    //gross fix for adding another 0 in front of times that hr < 10: ex: 8:30 -> 08:30
+    if(hr < 10) strTime = `0${hr}:${d.getMinutes()}`;
+    else strTime = `${hr}:${d.getMinutes()}`;
+
     // return strTime;
     return strTime;
 }
@@ -62,9 +63,8 @@ function App() {
 
 //Note: configured for local time. will need to fix this
   const selectBackground = () => {
-    // console.log("in select bg: hour: " + hour);
-    // const hour = new Date().getHours();
 
+   
     if (typeof weather.main == 'undefined') {
       return ('App');
     }
