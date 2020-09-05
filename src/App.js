@@ -67,12 +67,10 @@ function App() {
     if (typeof weather.main == 'undefined') {
       return ('App');
     }
-    // else {
-    //   if(hour >= 19 || hour < 5) {return 'App night'}
-    //   if(hour > 5 || hour < 10) {return 'App sunrise'}
-    //   if(weather.main.temp < 0) {return 'App freezing'}
-    //   // if(weather.main.temp > 32) {return 'App scorching'}
-    // }
+
+    //Include dynamic bg pic logic
+
+
     return 'App default';
   }
 
